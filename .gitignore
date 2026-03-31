@@ -1,0 +1,12 @@
+# Python virtual environment
+backend/venv/
+
+# Generated output images
+backend/outputs/
+
+# Python cache
+backend/__pycache__/
+backend/*.pyc
+
+# Environment variables (if you add later)
+backend/.env
