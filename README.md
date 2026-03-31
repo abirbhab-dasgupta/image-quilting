@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧵 Image Quilting for Texture Synthesis
 
-## Getting Started
+> **🚧 Work in Progress** — This project is under active development. Features and APIs may change.
 
-First, run the development server:
+An implementation of the [Image Quilting](https://people.eecs.berkeley.edu/~efros/research/quilting/quilting.pdf) algorithm (Efros & Freeman, 2001) for texture synthesis, with a FastAPI backend and a Next.js frontend.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Upload a small texture sample and generate a seamlessly tiled, larger output image.
+
+---
+
+## ✨ Features
+
+- [x] Core quilting algorithm with minimum boundary cut
+- [x] Vectorized patch matching (NumPy)
+- [x] FastAPI REST endpoint (`POST /synthesize`)
+- [ ] Next.js frontend with drag-and-drop upload
+- [ ] Live preview & parameter tuning (block size, overlap, tolerance)
+- [ ] Gallery of sample textures
+- [ ] Dockerized deployment
+
+## 🏗️ Project Structure
+
+```
+image-quilting/
+├── backend/
+│   ├── main.py          # FastAPI server
+│   ├── quilting.py       # Core algorithm (patch extraction, min-cut, synthesis)
+│   └── outputs/          # Generated images (git-ignored)
+├── frontend/             # Next.js app (scaffolded, UI in progress)
+├── .gitignore
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔬 How It Works
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Patch Extraction** — All overlapping patches of a given block size are extracted from the input texture.
+2. **Candidate Selection** — For each output block, patches whose overlap region error falls within a tolerance of the best match are shortlisted.
+3. **Minimum Boundary Cut** — A dynamic-programming seam cut blends the chosen patch with its neighbors, eliminating visible seams.
+4. **Synthesis** — Blocks are placed left-to-right, top-to-bottom, building up the full output image.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Python 3.10+
+- Node.js 18+
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install fastapi uvicorn pillow numpy python-multipart
+uvicorn main:app --reload --port 8000
+```
 
-## Deploy on Vercel
+### Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The frontend runs on `http://localhost:3000` and the API on `http://localhost:8000`.
+
+## 📡 API
+
+### `POST /synthesize`
+
+| Parameter    | Type    | Default | Description                        |
+|--------------|---------|---------|------------------------------------|
+| `file`       | file    | —       | Input texture image (required)     |
+| `block_size` | int     | 30      | Patch size in pixels               |
+| `overlap`    | int     | 6       | Overlap width between patches      |
+| `tolerance`  | float   | 0.1     | Error tolerance for candidate pool |
+| `out_h`      | int     | 200     | Output image height                |
+| `out_w`      | int     | 300     | Output image width                 |
+
+**Returns:** the synthesized image as `image/png`.
+
+## 📝 References
+
+- Efros, A. A., & Freeman, W. T. (2001). *Image Quilting for Texture Synthesis and Transfer.* SIGGRAPH 2001.
+
+---
+
+<p align="center"><sub>🚧 This project is a work in progress — contributions and feedback welcome!</sub></p>
