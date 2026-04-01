@@ -8,16 +8,6 @@ Upload a small texture sample and generate a seamlessly tiled, larger output ima
 
 ---
 
-## ✨ Features
-
-- [x] Core quilting algorithm with minimum boundary cut
-- [x] Vectorized patch matching (NumPy)
-- [x] FastAPI REST endpoint (`POST /synthesize`)
-- [ ] Next.js frontend with drag-and-drop upload
-- [ ] Live preview & parameter tuning (block size, overlap, tolerance)
-- [ ] Gallery of sample textures
-- [ ] Dockerized deployment
-
 ## 🏗️ Project Structure
 
 ```
@@ -80,9 +70,6 @@ The frontend runs on `http://localhost:3000` and the API on `http://localhost:80
 
 **Returns:** the synthesized image as `image/png`.
 
-## 📝 References
-
-- Efros, A. A., & Freeman, W. T. (2001). *Image Quilting for Texture Synthesis and Transfer.* SIGGRAPH 2001.
 
 ---
 
