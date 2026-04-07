@@ -73,4 +73,4 @@ The frontend runs on `http://localhost:3000` and the API on `http://localhost:80
 
 ---
 
-<p align="center"><sub>🚧 This project is a work in progress — contributions and feedback welcome!</sub></p>
+
