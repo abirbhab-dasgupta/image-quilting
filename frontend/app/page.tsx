@@ -11,9 +11,7 @@ interface Params {
   outSize: number;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   CONSTANTS
-───────────────────────────────────────────────────────────── */
+
 const PARAM_CONFIG = [
   { key: "blockSize", label: "Block Size", min: 20, max: 80, step: 2, unit: "px", decimals: 0, desc: "Patch dimensions" },
   { key: "overlap", label: "Overlap", min: 4, max: 20, step: 1, unit: "px", decimals: 0, desc: "Seam blend zone" },
@@ -28,9 +26,7 @@ const STEPS = [
   { n: "04", title: "Quilt", body: "Blocks are stitched along the seam — edges disappear, texture flows." },
 ];
 
-/* ─────────────────────────────────────────────────────────────
-   PAGE
-───────────────────────────────────────────────────────────── */
+
 export default function Home() {
   const [source, setSource] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
@@ -70,7 +66,7 @@ export default function Home() {
       form.append("tolerance", String(params.tolerance));
       form.append("out_h", String(params.outSize));
       form.append("out_w", String(params.outSize));
-      const res = await fetch("http://localhost:8000/synthesize", { method: "POST", body: form });
+      const res = await fetch("https://image-quilting-lime.vercel.app/synthesize", { method: "POST", body: form });
       if (!res.ok) throw new Error("Backend error — is uvicorn running on :8000?");
       setResult(URL.createObjectURL(await res.blob()));
       setDone(true);
