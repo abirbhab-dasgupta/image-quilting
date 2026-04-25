@@ -2,7 +2,7 @@ import numpy as np
 from PIL import Image
 
 def load_image(path: str) -> np.ndarray:
-    return np.array(Image.open(path).convert("RGB"), dtype=np.float64)
+    return np.array(Image.open(path).convert("RGB"), dtype=np.float32)
 
 def save_image(arr: np.ndarray, path: str):
     Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8)).save(path)
@@ -80,7 +80,7 @@ def synthesize(texture: np.ndarray, block_size: int,
                overlap: int, tolerance: float,
                out_h: int, out_w: int) -> np.ndarray:
 
-    output    = np.zeros((out_h, out_w, 3), dtype=np.float64)
+    output    = np.zeros((out_h, out_w, 3), dtype=np.float32)
     patch_arr = get_all_patches(texture, block_size)   # built ONCE
     step      = block_size - overlap
 

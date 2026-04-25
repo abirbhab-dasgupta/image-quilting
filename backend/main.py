@@ -9,7 +9,6 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    # Added localhost:3000 so you can still test your frontend locally
     allow_origins=["https://imagequilting.vercel.app", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -32,18 +31,24 @@ async def synthesize_texture(
     # 1. Read uploaded image into memory
     contents = await file.read()
     img = Image.open(io.BytesIO(contents)).convert("RGB")
-    texture = np.array(img, dtype=np.float64)
+    
+    # 2. SAFETY CHECK: Shrink the image to prevent Vercel 1GB RAM crash
+    # This keeps the image under ~150x150 pixels before processing
+    img.thumbnail((150, 150)) 
+    
+    # 3. Convert to float32 (Uses 50% less memory than float64)
+    texture = np.array(img, dtype=np.float32)
 
-    # 2. Run quilting algorithm
+    # 4. Run quilting algorithm
     result = synthesize(texture, block_size, overlap, tolerance, out_h, out_w)
 
-    # 3. Convert NumPy array back to a PIL Image
+    # 5. Convert NumPy array back to a PIL Image
     result_img = Image.fromarray(np.clip(result, 0, 255).astype(np.uint8))
     
-    # 4. Save to a memory buffer instead of the hard drive!
+    # 6. Save to a memory buffer instead of the hard drive
     img_byte_arr = io.BytesIO()
     result_img.save(img_byte_arr, format='PNG')
     image_bytes = img_byte_arr.getvalue()
 
-    # 5. Send the raw bytes back as an image response
+    # 7. Send the raw bytes back to the Next.js frontend
     return Response(content=image_bytes, media_type="image/png")
