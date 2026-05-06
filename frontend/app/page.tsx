@@ -110,28 +110,42 @@ export default function Home() {
             Quilt<span style={{ color: "var(--blue)" }}>Synth</span>
           </span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <Pill text="Efros & Freeman · 2001" />
-          <Pill text="FastAPI + Next.js" accent />
-        </div>
+        <a
+          href="https://github.com/abirbhab-dasgupta/image-quilting"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open GitHub repository"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 42,
+            height: 42,
+            borderRadius: 999,
+            border: "1px solid rgba(0,0,0,0.08)",
+            background: "rgba(255,255,255,0.7)",
+            color: "var(--ink)",
+            textDecoration: "none",
+            boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
+          }}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.54 2.87 8.4 6.84 9.77.5.1.68-.22.68-.49 0-.24-.01-1.03-.01-1.87-2.78.6-3.37-1.23-3.37-1.23-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.08 1.56 1.06 1.56 1.06.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.13-4.55-5.02 0-1.11.38-2.02 1.01-2.73-.1-.26-.44-1.31.1-2.73 0 0 .82-.27 2.7 1.04A9.05 9.05 0 0 1 12 6.84c.83 0 1.67.11 2.45.32 1.87-1.31 2.69-1.04 2.69-1.04.54 1.42.2 2.47.1 2.73.63.71 1.01 1.62 1.01 2.73 0 3.9-2.33 4.76-4.56 5.01.36.32.67.94.67 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.3 10.3 0 0 0 22 12.25C22 6.58 17.52 2 12 2z" />
+          </svg>
+        </a>
+        
       </nav>
 
       {/* ── HERO ── */}
       <section style={{ padding: "5rem 2.5rem 4rem", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-          <div style={{
-            display: "inline-flex", alignItems: "center", gap: 8, marginBottom: "1.25rem",
-            background: "var(--violet-pale)", padding: "5px 14px 5px 8px", borderRadius: 999,
-            border: "1px solid rgba(103,108,213,0.2)"
-          }}>
-            <span style={{
-              display: "inline-block", width: 7, height: 7, borderRadius: "50%",
-              background: "var(--violet)", animation: "floatDot 2s ease-in-out infinite"
-            }} />
-            <span style={{ fontSize: 12, fontWeight: 500, color: "var(--violet)", letterSpacing: "0.04em" }}>
-              Classical Computer Vision Algorithm
-            </span>
-          </div>
+         
           <h1 style={{
             fontFamily: "'Bricolage Grotesque',sans-serif", fontWeight: 800, fontSize: "clamp(2.8rem,5vw,4rem)",
             lineHeight: 1.08, letterSpacing: "-2px", color: "var(--ink)", marginBottom: "1.25rem",
